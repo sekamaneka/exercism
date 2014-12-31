@@ -20,3 +20,5 @@ def palindrome(max_factor,min_factor,op,lim):
                         sav_prod = lim = int(prod)
                         saved = (i,j)
     return sav_prod,saved
+
+print(palindrome(999,000,operator.gt,000))
