@@ -9,24 +9,19 @@ class Allergies:
         'pollen' : 64,
         'cats' : 128 
         }
-
+    
     def __init__(self, score_sum):
-        self.score_sum = score_sum%256
-        self.list = []
-        #eggs should be added to the list only if score_sum is not an even number
-        if self.score_sum%2==1:
-                self.list.insert(0,(1,'eggs'))
-                self.score_sum -= 1
-        
-        for key,value in self.allergie_scores.items():
-            if not value == 1:
-                self.score_sum = self.score_sum - value
-                if self.score_sum < 0 or self.score_sum == value:
-                    self.score_sum += value
-                else:
-                    self.list.insert(0,(value,key))
-        #this is required to pass the test cases
-        self.list = [j for i,j in sorted(self.list)]
+        self.score_sum = score_sum
+        self.list = self.get_allergen_list()
+
+    def get_allergen_list(self):
+        #all smaller numbers fit to each bigger number
+        #go binary
+        #it returns a list sorted according to their value on the allergie_scores dictionary
+    return sorted([x for x in self.allergie_scores if self.is_allergic_to(x)],key=lambda i:self.allergie_scores[i])
 
     def is_allergic_to(self,allergen):
-        return allergen in self.list
+        #Here Python's way of seeing all integers bigger than 0 as True is of use
+        return self.allergie_scores[allergen] & self.score_sum
+
+
